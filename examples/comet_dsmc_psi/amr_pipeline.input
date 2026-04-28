@@ -1,0 +1,36 @@
+&amr_input
+  ! ============================================================
+  ! Example: COMET DSMC plume-surface interaction
+  ! Requires the in-house COMET DSMC solver — not bundled with this repo.
+  ! See examples/comet_dsmc_psi/README.md for the full description.
+  ! ============================================================
+
+  ! Pipeline settings
+  loops              = 3
+  gmsh_bin           = /home/USER/gmsh/gmsh-4.11.1-Linux64/bin/gmsh
+  pvpython           = /home/USER/paraview/ParaView-5.13.2-MPI-Linux-Python3.10-x86_64/bin/pvpython
+
+  ! Geometry & mesh — your COMET .geo files go here
+  geo_file           = 2d_axisym.geo
+  geo_file_amr       = 2d_axisym_amr.geo
+  sim_mesh           = 2d_axisym.msh
+  sim_mesh_amr       = 2d_axisym_amr.msh
+
+  ! COMET solver scripts (provided with COMET)
+  case_script        = run_centos_gmsh_nparts=1_groupsize=1.sh
+  case_script_amr    = run_centos_gmsh_nparts=1_groupsize=1_amr.sh
+  final_py           = final.py
+
+  ! Direct extraction — read mean free path field directly from COMET output
+  extraction_mode    = direct
+  mfp_column         = mean free path
+  pos_scale          = 1.0
+
+  ! Output settings
+  partition_mesh     = false
+  pv_output_dir      = field*
+  pvd_create         = true
+  raw_csv            = gmsh/all_data.csv
+  filtered_csv       = gmsh/filtered_mfp.csv
+  pos_file           = gmsh/mfp.pos
+/

@@ -1,0 +1,24 @@
+# Pipeline outputs
+comet_result/
+logs/
+gmsh/*.msh
+gmsh/all_data.csv
+gmsh/filtered_mfp.csv
+gmsh/mfp.pos
+
+# OpenFOAM run artifacts
+openfoam_case/0/
+openfoam_case/[1-9]*/
+openfoam_case/[1-9]*.[0-9]*/
+openfoam_case/processor*/
+openfoam_case/log.*
+openfoam_case/postProcessing/
+openfoam_case/VTK/
+openfoam_case/constant/polyMesh/
+
+# Editor / OS
+*.swp
+*.swo
+.DS_Store
+__pycache__/
+*.pyc

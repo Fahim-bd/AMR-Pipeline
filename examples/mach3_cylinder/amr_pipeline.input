@@ -1,0 +1,46 @@
+&amr_input
+  ! ============================================================
+  ! Example: Mach 3 cylinder at 50 km altitude
+  ! See examples/mach3_cylinder/README.md for the full description.
+  ! ============================================================
+
+  ! Pipeline settings
+  loops              = 3
+  gmsh_bin           = /home/USER/gmsh/gmsh-4.11.1-Linux64/bin/gmsh
+  pvpython           = /home/USER/paraview/ParaView-5.13.2-MPI-Linux-Python3.10-x86_64/bin/pvpython
+
+  ! Geometry & mesh
+  geo_file           = 2d_cylinder.geo
+  geo_file_amr       = 2d_cylinder_amr.geo
+  sim_mesh           = 2d_cylinder.msh
+  sim_mesh_amr       = 2d_cylinder_amr.msh
+
+  ! Solver run scripts
+  case_script        = run_openfoam.sh
+  case_script_amr    = run_openfoam_amr.sh
+  final_py           = final.py
+
+  ! Extraction settings
+  extraction_mode    = gradient
+  gradient_field     = p
+  sizing_min         = 0.002
+  sizing_max         = 0.015
+  sizing_scale       = 100.0
+  mfp_column         = p_sizing
+  pos_scale          = 1.0
+
+  ! OpenFOAM solver settings
+  foam_source        = /home/USER/OpenFOAM/OpenFOAM-v2406/etc/bashrc
+  solver             = rhoCentralFoam
+  case_dir           = openfoam_case
+  boundary_fix       = frontAndBack:empty, wall:wall
+  foam_sigfpe        = false
+
+  ! Output settings
+  partition_mesh     = false
+  pv_output_dir      = field
+  pvd_create         = true
+  raw_csv            = gmsh/all_data.csv
+  filtered_csv       = gmsh/filtered_mfp.csv
+  pos_file           = gmsh/mfp.pos
+/

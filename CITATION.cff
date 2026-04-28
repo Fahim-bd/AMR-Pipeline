@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+title: "AMR-Pipeline: A solver-agnostic adaptive mesh refinement pipeline for CFD and DSMC simulations"
+message: "If you use this software, please cite it using the metadata in this file."
+type: software
+authors:
+  - family-names: Shahriyar
+    given-names: Fahim
+    affiliation: "Department of Mechanical Engineering, University of North Dakota"
+    orcid: ""
+  - family-names: Diallo
+    given-names: Alseny
+    affiliation: "Department of Mechanical Engineering, University of North Dakota"
+  - family-names: Zhang
+    given-names: Chonglin
+    affiliation: "Department of Mechanical Engineering, University of North Dakota"
+repository-code: "https://github.com/Fahim-bd/AMR-Pipeline"
+license: MIT
+version: "1.0.0"
+date-released: "2026-04-28"
+keywords:
+  - "adaptive mesh refinement"
+  - "AMR"
+  - "computational fluid dynamics"
+  - "direct simulation Monte Carlo"
+  - "DSMC"
+  - "Gmsh"
+  - "OpenFOAM"
+  - "rarefied gas dynamics"
+preferred-citation:
+  type: article
+  title: "Automated mean-free-path-based AMR for rarefied gas flow simulations"
+  authors:
+    - family-names: Shahriyar
+      given-names: Fahim
+    - family-names: Diallo
+      given-names: Alseny
+    - family-names: Zhang
+      given-names: Chonglin
+  journal: "SoftwareX"
+  year: 2026
+  status: "in preparation"
