@@ -1,21 +1,37 @@
 #!/usr/bin/env pvpython
 """
-Universal field extraction for AMR pipeline.
-Supports two modes:
-  - direct:   Extract an existing field column from PVD (e.g., COMET's "mean free path")
-  - gradient: Compute gradient of a scalar field, convert to sizing field, then extract
+final.py — field extraction step of the AMR pipeline.
+
+Reads the latest timestep from a PVD/VTU result tree, builds a per-point
+sizing field, and writes a Gmsh .pos background view. The orchestrator
+(all_run.sh) calls this once per AMR loop.
+
+Two extraction modes are supported:
+
+  direct    : the solver already wrote a meaningful length scale (e.g.
+              COMET's "mean free path" field). We just export it as-is.
+
+  gradient  : compute |grad(F)| of a chosen scalar field F (e.g. p, rho),
+              and map it through the sizing formula
+                  h = h_min + (h_max - h_min) / (1 + alpha * |grad F| / max|grad F|)
+              so that high-gradient regions get small cells and far-field
+              regions get large cells.
 
 Usage examples:
-  # COMET (direct mode — default):
+
+  # DSMC (direct mode is the default):
   pvpython final.py --pvd results.pvd --mfp-column "mean free path"
 
-  # OpenFOAM with density gradient:
+  # OpenFOAM, density-gradient driven AMR:
   pvpython final.py --pvd results.pvd --extraction-mode gradient \
       --gradient-field rho --sizing-min 0.001 --sizing-max 0.015 --sizing-scale 100.0
 
-  # OpenFOAM with pressure gradient:
+  # OpenFOAM, pressure-gradient driven AMR:
   pvpython final.py --pvd results.pvd --extraction-mode gradient \
-      --gradient-field p --sizing-min 0.001 --sizing-max 0.010 --sizing-scale 200.0
+      --gradient-field p --sizing-min 0.002 --sizing-max 0.015 --sizing-scale 100.0
+
+The script must be run with pvpython (ParaView's Python). Calling it with
+system python3 will fail at "from paraview.simple import *".
 """
 
 import argparse
